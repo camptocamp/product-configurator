@@ -402,12 +402,13 @@ class ProductProduct(models.Model):
             ptav_ids = product.product_template_attribute_value_ids.mapped(
                 "product_attribute_value_id"
             )
+
             duplicates = config_session_obj.search_variant(
                 product_tmpl_id=product.product_tmpl_id,
                 value_ids=ptav_ids.ids,
-            ).filtered(lambda p: p.id != product.id)
+            )
 
-            if duplicates:
+            if set(duplicates.ids) - set([product.id]):
                 raise ValidationError(
                     _(
                         "Configurable Products cannot have duplicates "

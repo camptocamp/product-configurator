@@ -128,7 +128,8 @@ class ProductAttribute(models.Model):
             elif maxv and val > maxv:
                 raise ValidationError(
                     _(
-                        "Selected custom value '%(name)s' must be lower than %(max_value)s"
+                        "Selected custom value '%(name)s' "
+                        "must be lower than %(max_value)s"
                     )
                     % ({"name": self.name, "max_val": self.max_val + 1})
                 )
@@ -291,7 +292,7 @@ class ProductAttributeValue(models.Model):
             extra_prices[attr_val_id.id] += line.price_extra
         return extra_prices
 
-    def _compute_display_name(self):
+    def _compute_display_name(self):  # pylint: disable=missing-return
         super()._compute_display_name()
         if self._context.get("show_price_extra"):
             product_template_id = self.env.context.get("active_id", False)

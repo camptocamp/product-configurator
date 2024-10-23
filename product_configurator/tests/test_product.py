@@ -387,11 +387,10 @@ class TestProduct(ProductConfiguratorTestCases):
             }
         )
         product_id._compute_product_weight_extra()
-        product_id.write(
-            {
-                "product_template_attribute_value_ids": product_template_attribute_value_ids
-            }
-        )
+        vals = {
+            "product_template_attribute_value_ids": product_template_attribute_value_ids
+        }
+        product_id.write(vals)
         self.assertEqual(
             product_template_attribute_value_ids.weight_extra,
             50.0,
